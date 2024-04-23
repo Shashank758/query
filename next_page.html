@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>University Student Query</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+    }
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+    h2 {
+        color: #007bff;
+    }
+    p {
+        color: #666;
+    }
+    img {
+        max-width: 100px;
+        margin-bottom: 20px;
+    }
+    .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+    label {
+        font-weight: bold;
+    }
+    select, textarea {
+        width: calc(100% - 22px);
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    input[type="submit"] {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    input[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+</style>
+<script>
+    function toggleQueryField() {
+        var queryType = document.getElementById("queryType").value;
+        var queryInput = document.getElementById("otherQuery");
+
+        if (queryType === "other") {
+            queryInput.style.display = "block";
+            queryInput.setAttribute("required", "required");
+        } else {
+            queryInput.style.display = "none";
+            queryInput.removeAttribute("required");
+        }
+    }
+</script>
+</head>
+<body>
+
+<div class="container">
+    <img src="university_logo.png" alt="University Logo">
+    <h2>Student Query Form</h2>
+    <p>Please select whom you want to meet and provide your query.</p>
+    <form action="submit_query.php" method="post">
+        <div class="form-group">
+            <label for="meet">Whom do you want to meet:</label>
+            <select id="meet" name="meet" required>
+                <option value="faculty">Faculty</option>
+                <option value="head">Head of Department</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="queryType">Query Type:</label>
+            <select id="queryType" name="queryType" onchange="toggleQueryField()" required>
+                <option value="attendance">Attendance</option>
+                <option value="assignment">Assignment</option>
+                <option value="function">Any Function</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+        <div class="form-group" id="otherQuery" style="display: none;">
+            <label for="query">Other Query:</label>
+            <textarea id="query" name="query" rows="4"></textarea>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Submit">
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
