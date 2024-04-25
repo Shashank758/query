@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>University Student Query</title>
+<title>University Student Query - Query Selection</title>
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -27,7 +27,7 @@
         color: #666;
     }
     img {
-        max-width: 100px;
+        max-width: 100%;
         margin-bottom: 20px;
     }
     .form-group {
@@ -38,6 +38,13 @@
         font-weight: bold;
     }
     select, textarea {
+        width: calc(100% - 22px);
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    input[type="text"] {
         width: calc(100% - 22px);
         padding: 10px;
         border: 1px solid #ccc;
@@ -56,7 +63,42 @@
         background-color: #0056b3;
     }
 </style>
+</head>
+<body>
+
+<div class="container">
+    <img src="MU Golden.png" alt="University Logo">
+    <h2>Select Query Form</h2>
+    <p>Please select whom you want to meet and the type of query you want to submit.</p>
+    <form id="queryForm">
+        <div class="form-group">
+            <label for="meetingType">Whom do you want to meet:</label>
+            <select id="meetingType" name="meetingType" required>
+                <option value="faculty">Faculty</option>
+                <option value="head">Head of Department</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="queryType">Query Type:</label>
+            <select id="queryType" name="queryType" required>
+                <option value="attendance">Attendance</option>
+                <option value="classwork">Classwork</option>
+                <option value="assignment">Assignment</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+        <div class="form-group" id="otherQuery" style="display: none;">
+            <label for="query">Query:</label>
+            <textarea id="query" name="query" rows="4"></textarea>
+        </div>
+        <div class="form-group">
+            <center> <input type="submit" value="Submit"></center>
+        </div>
+    </form>
+</div>
+
 <script>
+    // Function to toggle visibility of query input based on selection
     function toggleQueryField() {
         var queryType = document.getElementById("queryType").value;
         var queryInput = document.getElementById("otherQuery");
@@ -69,40 +111,29 @@
             queryInput.removeAttribute("required");
         }
     }
-</script>
-</head>
-<body>
+    
+    // Attach toggleQueryField function to queryType select element's onchange event
+    document.getElementById("queryType").addEventListener("change", toggleQueryField);
 
-<div class="container">
-    <img src="university_logo.png" alt="University Logo">
-    <h2>Student Query Form</h2>
-    <p>Please select whom you want to meet and provide your query.</p>
-    <form action="submit_query.php" method="post">
-        <div class="form-group">
-            <label for="meet">Whom do you want to meet:</label>
-            <select id="meet" name="meet" required>
-                <option value="faculty">Faculty</option>
-                <option value="head">Head of Department</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="queryType">Query Type:</label>
-            <select id="queryType" name="queryType" onchange="toggleQueryField()" required>
-                <option value="attendance">Attendance</option>
-                <option value="assignment">Assignment</option>
-                <option value="function">Any Function</option>
-                <option value="other">Other</option>
-            </select>
-        </div>
-        <div class="form-group" id="otherQuery" style="display: none;">
-            <label for="query">Other Query:</label>
-            <textarea id="query" name="query" rows="4"></textarea>
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Submit">
-        </div>
-    </form>
-</div>
+    // Form submission handling
+    document.getElementById("queryForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        var meetingType = document.getElementById("meetingType").value;
+        var queryType = document.getElementById("queryType").value;
+        var query = "";
+
+        if (queryType === "other") {
+            query = document.getElementById("query").value;
+        } else {
+            query = queryType; // If query type is not "other", use the selected query type
+        }
+
+        alert("Meeting Type: " + meetingType + "\nQuery Type: " + queryType + "\nQuery: " + query);
+
+        // You can perform further actions here, such as sending the query via AJAX or navigating to another page
+    });
+</script>
 
 </body>
 </html>
